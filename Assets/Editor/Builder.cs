@@ -1,0 +1,44 @@
+﻿using UnityEngine;
+using UnityEditor;
+using System.Collections;
+using System.Collections.Generic;
+using System;
+
+public class Builder : ScriptableObject {
+        static string[] SCENES = FindEnabledEditorScenes();
+
+        static string APP_NAME = "DumbGame";
+        static string TARGET_DIR = "Builds";
+
+        [MenuItem ("Custom/CI/Build Android")]
+        public static void PerformAndroidBuild ()
+        {
+                 string app_target = APP_NAME + ".apk";
+                 GenericBuild(SCENES, TARGET_DIR + "/" + app_target, BuildTarget.Android,BuildOptions.None);
+        }
+        
+        [MenuItem ("Custom/CI/Build Windows Store")]
+        static void PerformWSABuild ()
+        {
+                 string app_target = APP_NAME + ".apk";
+                 GenericBuild(SCENES, TARGET_DIR + "/" + app_target, BuildTarget.WSAPlayer,BuildOptions.None);
+        }
+
+	private static string[] FindEnabledEditorScenes() {
+		List<string> EditorScenes = new List<string>();
+		foreach(EditorBuildSettingsScene scene in EditorBuildSettings.scenes) {
+			if (!scene.enabled) continue;
+			EditorScenes.Add(scene.path);
+		}
+		return EditorScenes.ToArray();
+	}
+
+        static void GenericBuild(string[] scenes, string app_target, BuildTarget build_target, BuildOptions build_options)
+        {
+                EditorUserBuildSettings.SwitchActiveBuildTarget(build_target);
+                string res = BuildPipeline.BuildPlayer(scenes,app_target,build_target,build_options);
+                if (res.Length > 0) {
+                        throw new Exception("BuildPlayer failure: " + res);
+                }
+        }
+}
