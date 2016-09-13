@@ -20,7 +20,7 @@ public class Builder : ScriptableObject {
         [MenuItem ("Custom/CI/Build Windows Store")]
         static void PerformWSABuild ()
         {
-                 string app_target = APP_NAME + ".apk";
+                 string app_target = "WSA";
                  GenericBuild(SCENES, TARGET_DIR + "/" + app_target, BuildTarget.WSAPlayer,BuildOptions.None);
         }
 
