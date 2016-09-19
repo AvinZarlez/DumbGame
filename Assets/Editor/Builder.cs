@@ -7,6 +7,7 @@ using System;
 public class Builder : ScriptableObject {
         static string[] SCENES = FindEnabledEditorScenes();
 
+	// Use real app name here
         static string APP_NAME = "DumbGame";
         static string TARGET_DIR = "Builds";
 
