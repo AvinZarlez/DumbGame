@@ -10,6 +10,13 @@ public class Builder : ScriptableObject {
 	// Use real app name here
         static string APP_NAME = "DumbGame";
         static string TARGET_DIR = "Builds";
+	
+        [MenuItem ("Custom/CI/Build Windows Desktop")]
+        public static void PerformStandaloneWindowsBuild ()
+        {
+                 string app_target = APP_NAME + ".exe";
+                 GenericBuild(SCENES, TARGET_DIR + "/" + app_target, BuildTarget.StandaloneWindows,BuildOptions.None);
+        }
 
         [MenuItem ("Custom/CI/Build Android")]
         public static void PerformAndroidBuild ()
