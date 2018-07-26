@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
+using UnityEditor.Build.Reporting;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -44,8 +45,8 @@ public class Builder : ScriptableObject {
         static void GenericBuild(string[] scenes, string app_target, BuildTarget build_target, BuildOptions build_options)
         {
                 EditorUserBuildSettings.SwitchActiveBuildTarget(build_target);
-                string res = BuildPipeline.BuildPlayer(scenes,app_target,build_target,build_options);
-                if (res.Length > 0) {
+                BuildReport res = BuildPipeline.BuildPlayer(scenes,app_target,build_target,build_options);
+                if (res != null) {
                         throw new Exception("BuildPlayer failure: " + res);
                 }
         }
